@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunFaceDonuts - Satu Tempat, Dua Pengalaman</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        * {
+            box-sizing: border-box; 
+        }
+        
+        /* Custom Gradient Background */
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff6b9d, #ffd93d, #6bcf7f);
+        }
+        
+        /* Donut Spin Animation */
+        .donut-animation {
+            animation: spin 8s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Bounce In Animation for Hero */
+        .bounce-in {
+            animation: bounceIn 1s ease-out;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Fade In Animation for Sections */
+        .fade-in {
+            animation: fadeIn 1.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Hover Effect */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        /* ======================================== */
+        /* Custom CSS untuk Floating Chatbot */
+        /* ======================================== */
+        #chat-bubble {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        #chat-bubble:hover {
+            transform: scale(1.05);
+        }
+
+        #chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            z-index: 99;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: none; /* Default hidden */
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        #chat-body {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background-color: #f7f7f7;
+        }
+
+        .chat-message {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            max-width: 80%;
+            word-wrap: break-word;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .user-message {
+            background-color: #ffe0f0; /* Pinkish tone */
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background-color: #fff;
+            border: 1px solid #eee;
+            margin-right: auto;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar styling for chat body */
+        #chat-body::-webkit-scrollbar {
+            width: 8px;
+        }
+        #chat-body::-webkit-scrollbar-thumb {
+            background-color: #ff6b9d;
+            border-radius: 4px;
+        }
+        #chat-body::-webkit-scrollbar-track {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <header class="gradient-bg text-white py-4 px-6 shadow-lg fixed w-full top-0 z-50 transition-all duration-300" id="main-header">
+        <nav class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="text-4xl donut-animation">🍩</div>
+                <h1 class="text-2xl font-bold">FunFaceDonuts</h1>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="hover:text-yellow-200 transition-colors">Beranda</a>
+                <a href="#products" class="hover:text-yellow-200 transition-colors">Produk</a>
+                <a href="#services" class="hover:text-yellow-200 transition-colors">Layanan</a>
+                <a href="#packages" class="hover:text-yellow-200 transition-colors">Paket</a>
+                <a href="#gallery" class="hover:text-yellow-200 transition-colors">Galeri</a>
+                <a href="#contact" class="hover:text-yellow-200 transition-colors">Kontak</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+            <div class="flex flex-col space-y-2">
+                <a href="#home" class="hover:text-yellow-200 transition-colors py-2">Beranda</a>
+                <a href="#products" class="hover:text-yellow-200 transition-colors py-2">Produk</a>
+                <a href="#services" class="hover:text-yellow-200 transition-colors py-2">Layanan</a>
+                <a href="#packages" class="hover:text-yellow-200 transition-colors py-2">Paket</a>
+                <a href="#gallery" class="hover:text-yellow-200 transition-colors py-2">Galeri</a>
+                <a href="#contact" class="hover:text-yellow-200 transition-colors py-2">Kontak</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="gradient-bg text-white py-32 px-6 mt-20">
+        <div class="container mx-auto text-center">
+            <div class="bounce-in">
+                <h2 class="text-5xl md:text-6xl font-bold mb-6">
+                    Satu Tempat, Dua Pengalaman! 🎨🍩
+                </h2>
+                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                    Kafe pertama yang menggabungkan donat homemade segar dengan face painting profesional. 
+                    Solusi pesta yang praktis dengan momen instagramable!
+                </p>
+                <div class="flex flex-col md:flex-row gap-4 justify-center">
+                    <button onclick="scrollToSection('products')" class="bg-white text-pink-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-100 transition-all transform hover:scale-105">
+                        Lihat Menu Kami
+                    </button>
+                    <button onclick="scrollToSection('contact')" class="border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-pink-600 transition-all transform hover:scale-105">
+                        Hubungi Kami
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="py-20 px-6 bg-gray-50">
+        <div class="container mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h3 class="text-4xl font-bold text-gray-800 mb-4">Menu Donat Spesial 🍩</h3>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Donat homemade segar dengan berbagai topping menarik, dibuat dengan cinta setiap hari
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <div class="p-6">
+                        <div class="text-6xl text-center mb-4">🍫</div>
+                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Cokelat Klasik</h4>
+                        <p class="text-gray-600 text-center mb-4">Donat empuk dengan glasir cokelat Belgia yang kaya rasa</p>
+                        <div class="text-center">
+                            <span class="text-2xl font-bold text-green-600">Rp 8.000</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <div class="p-6">
+                        <div class="text-6xl text-center mb-4">🍓</div>
+                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Stroberi Ceria</h4>
+                        <p class="text-gray-600 text-center mb-4">Glasir stroberi manis dengan taburan meses warna-warni yang ceria</p>
+                        <div class="text-center">
+                            <span class="text-2xl font-bold text-green-600">Rp 8.500</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <div class="p-6">
+                        <div class="text-6xl text-center mb-4">🧀</div>
+                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Keju Gurih</h4>
+                        <p class="text-gray-600 text-center mb-4">Taburan keju cheddar parut melimpah di atas glasir manis</p>
+                        <div class="text-center">
+                            <span class="text-2xl font-bold text-green-600">Rp 9.000</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <div class="p-6">
+                        <div class="text-6xl text-center mb-4">🌿</div>
+                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Pandan Wangi</h4>
+                        <p class="text-gray-600 text-center mb-4">Donat dengan aroma pandan yang khas dan taburan kelapa kering</p>
+                        <div class="text-center">
+                            <span class="text-2xl font-bold text-green-600">Rp 8.500</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover border-2 border-yellow-400 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-black px-3 py-1 rounded-full text-xs font-bold">
+                        SPESIAL
+                    </div>
+                    <div class="p-6">
+                        <div class="text-6xl text-center mb-4">🎨</div>
+                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Donat Kustom</h4>
+                        <p class="text-gray-600 text-center mb-4">Donat dengan lapisan dasar putih yang dapat dilukis dengan desain sesuai keinginan. Min. 12 pcs</p>
+                        <div class="text-center">
+                            <span class="text-2xl font-bold text-green-600">Mulai Rp 15.000</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                    <div class="p-6">
+                        <div class="text-6xl text-center mb-4">☕</div>
+                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Kopi Caramel</h4>
+                        <p class="text-gray-600 text-center mb-4">Glasir kopi beraroma dengan *drizzle* saus karamel asin</p>
+                        <div class="text-center">
+                            <span class="text-2xl font-bold text-green-600">Rp 9.500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-20 px-6 bg-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h3 class="text-4xl font-bold text-gray-800 mb-4">Layanan Face Painting 🎨</h3>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Face painting profesional dengan desain kreatif untuk semua usia
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="text-center card-hover bg-blue-50 rounded-2xl p-6">
+                    <div class="text-5xl mb-3">🦸</div>
+                    <h4 class="text-lg font-bold mb-2 text-blue-600">Pahlawan Super</h4>
+                    <p class="text-gray-600 text-sm mb-3">Desain ala superhero populer seperti Spider-Man dan Batman</p>
+                    <span class="text-base font-bold text-green-600">Mulai Rp 35.000</span>
+                </div>
+                
+                <div class="text-center card-hover bg-pink-50 rounded-2xl p-6">
+                    <div class="text-5xl mb-3">👑</div>
+                    <h4 class="text-lg font-bold mb-2 text-pink-600">Putri Kerajaan</h4>
+                    <p class="text-gray-600 text-sm mb-3">Desain anggun dengan mahkota dan kilau untuk tampilan bak putri</p>
+                    <span class="text-base font-bold text-green-600">Mulai Rp 40.000</span>
+                </div>
+                
+                <div class="text-center card-hover bg-orange-50 rounded-2xl p-6">
+                    <div class="text-5xl mb-3">🐯</div>
+                    <h4 class="text-lg font-bold mb-2 text-orange-600">Hewan Lucu</h4>
+                    <p class="text-gray-600 text-sm mb-3">Berubah menjadi harimau, kupu-kupu, atau anjing yang menggemaskan</p>
+                    <span class="text-base font-bold text-green-600">Mulai Rp 30.000</span>
+                </div>
+                
+                <div class="text-center card-hover bg-gray-50 rounded-2xl p-6">
+                    <div class="text-5xl mb-3">🤖</div>
+                    <h4 class="text-lg font-bold mb-2 text-gray-600">Robot & Monster</h4>
+                    <p class="text-gray-600 text-sm mb-3">Desain futuristik dan monster-monster seru untuk petualang cilik</p>
+                    <span class="text-base font-bold text-green-600">Mulai Rp 35.000</span>
+                </div>
+                
+                <div class="text-center card-hover bg-green-50 rounded-2xl p-6">
+                    <div class="text-5xl mb-3">🌸</div>
+                    <h4 class="text-lg font-bold mb-2 text-green-600">Bunga & Alam</h4>
+                    <p class="text-gray-600 text-sm mb-3">Motif floral yang indah dan elemen alam lainnya untuk tampilan manis</p>
+                    <span class="text-base font-bold text-green-600">Mulai Rp 25.000</span>
+                </div>
+                
+                <div class="text-center card-hover bg-purple-50 rounded-2xl p-6">
+                    <div class="text-5xl mb-3">✨</div>
+                    <h4 class="text-lg font-bold mb-2 text-purple-600">Abstrak Berkilau</h4>
+                    <p class="text-gray-600 text-sm mb-3">Kombinasi warna-warni, glitter, dan pola unik untuk ekspresi diri</p>
+                    <span class="text-base font-bold text-green-600">Mulai Rp 30.000</span>
+                </div>
+                
+                <div class="text-center card-hover bg-gradient-to-br from-pink-50 to-yellow-50 rounded-2xl p-6 border-2 border-yellow-400 relative">
+                    <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-bold">
+                        TRENDING
+                    </div>
+                    <div class="text-5xl mb-3">📱</div>
+                    <h4 class="text-lg font-bold mb-2 text-yellow-600">Tren Media Sosial</h4>
+                    <p class="text-gray-600 text-sm mb-3">Desain yang sedang viral seperti emoji populer, glitter art, atau pola minimalis aesthetic</p>
+                    <span class="text-base font-bold text-green-600">Mulai Rp 45.000</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="packages" class="py-20 px-6 gradient-bg text-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h3 class="text-4xl font-bold mb-4">Paket Pesta Spesial 🎉</h3>
+                <p class="text-xl max-w-2xl mx-auto">
+                    Paket lengkap untuk acara spesial Anda dengan kombinasi donat dan face painting
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white text-gray-800 rounded-2xl p-8 card-hover">
+                    <div class="text-center mb-6">
+                        <div class="text-6xl mb-4">🎈</div>
+                        <h4 class="text-2xl font-bold text-pink-600 mb-2">Paket Seru</h4>
+                        <div class="text-3xl font-bold text-green-600 mb-4">Rp 350.000</div>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center">
+                            <span class="text-green-500 mr-2">✓</span>
+                            12 donat pilihan
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-500 mr-2">✓</span>
+                            Face painting untuk 5 anak
+                        </li>
+                    </ul>
+                    <button onclick="openBookingForm('seru')" class="w-full bg-pink-600 text-white py-3 rounded-full font-bold hover:bg-pink-700 transition-colors">
+                        Pesan Sekarang
+                    </button>
+                </div>
+                
+                <div class="bg-white text-gray-800 rounded-2xl p-8 card-hover border-4 border-yellow-400 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-bold">
+                        POPULER
+                    </div>
+                    <div class="text-center mb-6">
+                        <div class="text-6xl mb-4">🎊</div>
+                        <h4 class="text-2xl font-bold text-pink-600 mb-2">Paket Heboh</h4>
+                        <div class="text-3xl font-bold text-green-600 mb-4">Rp 750.000</div>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center">
+                            <span class="text-green-500 mr-2">✓</span>
+                            24 donat pilihan
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-500 mr-2">✓</span>
+                            Face painting untuk 15 anak
+                        </li>
+                    </ul>
+                    <button onclick="openBookingForm('heboh')" class="w-full bg-pink-600 text-white py-3 rounded-full font-bold hover:bg-pink-700 transition-colors">
+                        Pesan Sekarang
+                    </button>
+                </div>
+                
+                <div class="bg-white text-gray-800 rounded-2xl p-8 card-hover">
+                    <div class="text-center mb-6">
+                        <div class="text-6xl mb-4">🎆</div>
+                        <h4 class="text-2xl font-bold text-pink-600 mb-2">Paket Megah</h4>
+                        <div class="text-3xl font-bold text-green-600 mb-4">Rp 1.500.000</div>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center">
+                            <span class="text-green-500 mr-2">✓</span>
+                            50 donat pilihan
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-500 mr-2">✓</span>
+                            Face painting untuk 30 anak
+                        </li>
+                    </ul>
+                    <button onclick="openBookingForm('megah')" class="w-full bg-pink-600 text-white py-3 rounded-full font-bold hover:bg-pink-700 transition-colors">
+                        Pesan Sekarang
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-20 px-6 bg-gray-50">
+        <div class="container mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h3 class="text-4xl font-bold text-gray-800 mb-4">Galeri Momen Bahagia 📸</h3>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Lihat keseruan dan kebahagiaan pelanggan kami
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-gradient-to-br from-pink-200 to-purple-200 rounded-2xl p-8 card-hover aspect-square flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">🎨</div>
+                        <p class="text-sm font-semibold">Face Painting</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-yellow-200 to-orange-200 rounded-2xl p-8 card-hover aspect-square flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">🍩</div>
+                        <p class="text-sm font-semibold">Fresh Donuts</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-green-200 to-blue-200 rounded-2xl p-8 card-hover aspect-square flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">🎉</div>
+                        <p class="text-sm font-semibold">Birthday Party</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-purple-200 to-pink-200 rounded-2xl p-8 card-hover aspect-square flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">👨‍👩‍👧‍👦</div>
+                        <p class="text-sm font-semibold">Family Fun</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-blue-200 to-green-200 rounded-2xl p-8 card-hover aspect-square flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">🦋</div>
+                        <p class="text-sm font-semibold">Butterfly Design</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-orange-200 to-red-200 rounded-2xl p-8 card-hover aspect-square flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">🦸</div>
+                        <p class="text-sm font-semibold">Superhero</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-pink-200 to-yellow-200 rounded-2xl p-8 card-hover aspect-square flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">🌈</div>
+                        <p class="text-sm font-semibold">Colorful Treats</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-purple-200 to-blue-200 rounded-2xl p-8 card-hover aspect-square flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">😊</div>
+                        <p class="text-sm font-semibold">Happy Kids</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 px-6 bg-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <h3 class="text-4xl font-bold text-gray-800 mb-4">Hubungi Kami 📞</h3>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Siap melayani kebutuhan pesta dan acara spesial Anda
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-pink-100 p-4 rounded-full">
+                            <div class="text-2xl">📍</div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-800">Alamat</h4>
+                            <p class="text-gray-600">Jl. Kebahagiaan No. 123, Jakarta Selatan</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-pink-100 p-4 rounded-full">
+                            <div class="text-2xl">📱</div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-800">WhatsApp</h4>
+                            <p class="text-gray-600">+62 838-1809-2776</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-pink-100 p-4 rounded-full">
+                            <div class="text-2xl">📧</div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-800">Email</h4>
+                            <p class="text-gray-600">hello@funfacedonuts.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-pink-100 p-4 rounded-full">
+                            <div class="text-2xl">🕒</div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-800">Jam Buka</h4>
+                            <p class="text-gray-600">Senin - Minggu: 09:00 - 21:00</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-8">
+                    <h4 class="text-2xl font-bold text-gray-800 mb-6">Kirim Pesan</h4>
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <input type="text" id="name" placeholder="Nama Lengkap" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <input type="tel" id="phone" placeholder="Nomor WhatsApp" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <input type="email" id="email" placeholder="Email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <textarea id="message" placeholder="Pesan Anda" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-pink-600 text-white py-3 rounded-lg font-bold hover:bg-pink-700 transition-colors">
+                            Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="gradient-bg text-white py-12 px-6">
+        <div class="container mx-auto text-center">
+            <div class="flex items-center justify-center space-x-3 mb-6">
+                <div class="text-4xl donut-animation">🍩</div>
+                <h2 class="text-3xl font-bold">FunFaceDonuts</h2>
+            </div>
+            <p class="text-lg mb-6">Satu Tempat, Dua Pengalaman - Donat Segar & Face Painting Profesional</p>
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="https://www.instagram.com/funfacedonuts/" target="_blank" class="hover:text-yellow-200 transition-colors">Instagram</a>
+                <a href="#" class="hover:text-yellow-200 transition-colors">Facebook</a>
+                <a href="https://www.tiktok.com/@funfacedonuts?is_from_webapp=1&sender_device=pc" target="_blank" class="hover:text-yellow-200 transition-colors">TikTok</a>
+                <a href="#" class="hover:text-yellow-200 transition-colors">YouTube</a>
+            </div>
+            <p class="text-sm opacity-80">© 2024 FunFaceDonuts. Semua hak dilindungi.</p>
+        </div>
+    </footer>
+
+    <div id="booking-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full max-h-screen overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Pesan Paket</h3>
+                <button onclick="closeBookingForm()" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="booking-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Paket Dipilih</label>
+                    <input type="text" id="selected-package" readonly class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap</label>
+                    <input type="text" id="booking-name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nomor WhatsApp</label>
+                    <input type="tel" id="booking-phone" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Acara</label>
+                    <input type="date" id="booking-date" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Waktu Acara</label>
+                    <input type="time" id="booking-time" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Alamat Acara</label>
+                    <textarea id="booking-address" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none resize-none" rows="3"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Catatan Khusus</label>
+                    <textarea id="booking-notes" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none resize-none" rows="2" placeholder="Opsional"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-pink-600 text-white py-3 rounded-lg font-bold hover:bg-pink-700 transition-colors">
+                    Konfirmasi Pesanan
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="chat-bubble" class="bg-pink-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-xl">
+        💬
+    </div>
+
+    <div id="chat-window" class="flex flex-col bg-white">
+        <div class="bg-pink-600 text-white p-4 rounded-t-xl flex justify-between items-center">
+            <h4 class="font-bold">FunFace Assistant 🍩</h4>
+            <button id="close-chat-btn" class="text-white hover:text-yellow-200">
+                &times;
+            </button>
+        </div>
+        <div id="chat-body">
+            <div class="bot-message chat-message">Halo! Saya asisten FunFace Donuts. Ajukan pertanyaan tentang donat atau layanan kami.</div>
+        </div>
+        <div class="p-3 border-t border-gray-200">
+            <input type="text" id="chat-input" placeholder="Tanyakan sesuatu..." class="w-full px-3 py-2 border rounded-full focus:ring-pink-500 focus:border-pink-500">
+        </div>
+    </div>
+
+    <script>
+        // ====================================================================
+        // KONFIGURASI SUPABASE (GANTI DENGAN KUNCI ANDA)
+        // ====================================================================
+        const SUPABASE_URL = 'https://qgjgkoktsmsxvinssiei.supabase.co'; 
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnamdrb2t0c21zeHZpbnNzaWVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4NTQ1NDMsImV4cCI6MjA3NDQzMDU0M30.GIb0b-9L8NaeepgsmubGE--z3w9X9SHSx9c0PeawJTI'; 
+        const WHATSAPP_NUMBER = '6283818092776'; // Ganti dengan nomor WhatsApp bisnis Anda
+
+        const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+        // ====================================================================
+        // FUNGSI UTAMA UNTUK KIRIM DATA KE SUPABASE & WHATSAPP
+        // ====================================================================
+        async function sendDataAndOpenWhatsapp(tableName, data, successMessage, whatsappTemplate) {
+            const { error } = await db
+               .from(tableName)
+               .insert([data]);
+
+            if (error) {
+                console.error('Supabase Error:', error);
+                alert(`Gagal menyimpan data. Pastikan RLS di Supabase nonaktif atau sudah diatur dengan benar. Error: ${error.message}`);
+                return;
+            }
+            
+            const encodedMessage = encodeURIComponent(whatsappTemplate(data));
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+            
+            alert(successMessage);
+        }
+
+        // ====================================================================
+        // LOGIKA FORMULIR KONTAK (TABEL: pesan_kontak)
+        // ====================================================================
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const data = {
+                nama: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                pesan: document.getElementById('message').value,
+            };
+
+            const whatsappTemplate = (d) => `Halo FunFaceDonuts! Saya punya pertanyaan.%0A%0ANama: ${d.nama}%0APhone: ${d.phone}%0AEmail: ${d.email}%0A%0APesan: ${d.pesan}`;
+
+            sendDataAndOpenWhatsapp(
+                'pesan_kontak',
+                data, 
+                'Terima kasih! Pesan Anda telah kami simpan di database dan Anda akan diarahkan ke WhatsApp untuk melanjutkan percakapan.',
+                whatsappTemplate
+            );
+            
+            this.reset();
+        });
+
+
+        // ====================================================================
+        // LOGIKA FORMULIR PEMESANAN (TABEL: pemesanan_paket)
+        // ====================================================================
+        document.getElementById('booking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const packageName = document.getElementById('selected-package').value;
+            
+            const data = {
+                paket: packageName,
+                nama: document.getElementById('booking-name').value,
+                phone: document.getElementById('booking-phone').value,
+                tanggal: document.getElementById('booking-date').value,
+                waktu: document.getElementById('booking-time').value,
+                alamat: document.getElementById('booking-address').value,
+                catatan: document.getElementById('booking-notes').value || 'Tidak ada',
+            };
+            
+            const whatsappTemplate = (d) => `Halo FunFaceDonuts! Saya ingin memesan:%0A%0APaket: ${d.paket}%0ANama: ${d.nama}%0APhone: ${d.phone}%0ATanggal: ${d.tanggal}%0AWaktu: ${d.waktu}%0AAlamat: ${d.alamat}%0ACatatan: ${d.catatan}%0A%0AMohon konfirmasi ketersediaan. Terima kasih!`;
+
+            sendDataAndOpenWhatsapp(
+                'pemesanan_paket',
+                data,
+                'Terima kasih! Pesanan Anda telah kami simpan di database dan Anda akan diarahkan ke WhatsApp untuk konfirmasi pesanan.',
+                whatsappTemplate
+            );
+            
+            closeBookingForm();
+            this.reset();
+        });
+        
+      // ====================================================================
+// LOGIKA CHATBOT RAG (MENGGUNAKAN N8N WEBHOOK)
+// ====================================================================
+
+const chatBubble = document.getElementById('chat-bubble');
+const chatWindow = document.getElementById('chat-window');
+const closeChatBtn = document.getElementById('close-chat-btn');
+const chatBody = document.getElementById('chat-body');
+const chatInput = document.getElementById('chat-input');
+// URL Web Hook n8n Anda
+const N8N_WEBHOOK_URL = 'https://niiawulan.app.n8n.cloud/webhook/8ce1622f-4364-4754-9627-90358381ec5d'; 
+
+
+// --------------------------------------------------------------------
+// FUNGSI UTAMA
+// --------------------------------------------------------------------
+
+// 1. Fungsi untuk menampilkan pesan di chat body
+function appendMessage(sender, text, isError = false, elementId = null) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('chat-message');
+
+    if (sender === 'user') {
+        messageElement.classList.add('user-message', 'text-sm');
+    } else {
+        messageElement.classList.add('bot-message', 'text-sm');
+        if (isError) messageElement.classList.add('bg-red-100', 'text-red-700');
+    }
+
+    if (elementId) {
+        messageElement.id = elementId;
+    }
+    
+    messageElement.innerHTML = text;
+    chatBody.appendChild(messageElement);
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// 2. Fungsi untuk memanggil Web Hook n8n (DIPERBAIKI)
+async function searchN8NAnswer(query) {
+    try {
+        const response = await fetch(N8N_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            // Mengirim pertanyaan sebagai user_question
+            body: JSON.stringify({ user_question: query }), 
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        // ✨ PERUBAHAN DI SINI: Mengambil nilai dari data.response
+        if (data && data.response) {
+            return data.response;
+        } else {
+            return 'Maaf, n8n mengembalikan data, tapi tidak ada kunci "response" yang ditemukan.';
+        }
+        
+    } catch (error) {
+        console.error("Error calling N8N Web Hook:", error);
+        return 'Maaf, terjadi masalah koneksi atau server n8n. Coba lagi nanti.';
+    }
+}
+
+// 3. Fungsi memproses input chat
+function handleChatInput() {
+    const query = chatInput.value.trim();
+    if (query === '') return;
+
+    appendMessage('user', query);
+    chatInput.value = '';
+
+    // Tampilkan pesan loading
+    const loadingMessageId = 'loading-' + Date.now();
+    appendMessage('bot', '🤖 Mencari jawaban...', false, loadingMessageId);
+    
+    // Panggil fungsi pencarian berbasis n8n
+    searchN8NAnswer(query).then(answer => {
+        // Hapus pesan loading
+        const loadingElement = document.getElementById(loadingMessageId);
+        if (loadingElement) loadingElement.remove();
+        
+        // Tampilkan jawaban
+        appendMessage('bot', answer);
+    }).catch(() => {
+        // Jika ada error
+        const loadingElement = document.getElementById(loadingMessageId);
+        if (loadingElement) loadingElement.remove();
+        appendMessage('bot', 'Gagal terhubung dengan layanan asisten.', true);
+    });
+}
+
+
+// --------------------------------------------------------------------
+// EVENT LISTENERS CHATBOT (TIDAK BERUBAH)
+// --------------------------------------------------------------------
+
+// Toggle window visibility
+chatBubble.addEventListener('click', () => {
+    chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+    if (chatWindow.style.display === 'flex') {
+        chatInput.focus();
+    }
+});
+
+closeChatBtn.addEventListener('click', () => {
+    chatWindow.style.display = 'none';
+});
+
+// Menghubungkan input Enter key
+chatInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        handleChatInput();
+    }
+});
+
+        // ====================================================================
+        // FUNGSI NAVIGASI & UI LAINNYA
+        // ====================================================================
+        
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling function
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            const headerHeight = 80; 
+            const elementPosition = element.offsetTop - headerHeight;
+            
+            window.scrollTo({
+                top: elementPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Add click handlers to all navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Booking modal functions
+        function openBookingForm(packageType) {
+            const modal = document.getElementById('booking-modal');
+            const packageInput = document.getElementById('selected-package');
+            
+            const packageNames = {
+                'seru': 'Paket Seru - Rp 350.000',
+                'heboh': 'Paket Heboh - Rp 750.000',
+                'megah': 'Paket Megah - Rp 1.500.000'
+            };
+            
+            packageInput.value = packageNames[packageType];
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBookingForm() {
+            const modal = document.getElementById('booking-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('booking-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBookingForm();
+            }
+        });
+
+        // Set minimum date to today for booking
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('booking-date').setAttribute('min', today);
+        });
+
+        // Add scroll effect to header 
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) { 
+                header.classList.add('backdrop-blur-sm', 'bg-white/95', 'text-gray-800');
+                header.classList.remove('gradient-bg', 'text-white');
+            } else {
+                header.classList.remove('backdrop-blur-sm', 'bg-white/95', 'text-gray-800');
+                header.classList.add('gradient-bg', 'text-white');
+            }
+        });
+    </script>
+</body>
+</html>
