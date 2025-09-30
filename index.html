@@ -742,27 +742,40 @@ const N8N_WEBHOOK_URL = 'https://niiawulan.app.n8n.cloud/webhook/8ce1622f-4364-4
 // FUNGSI UTAMA
 // --------------------------------------------------------------------
 
-// 1. Fungsi untuk menampilkan pesan di chat body
+function convertMarkdownToHtml(markdownText) {
+    // Mengganti teks yang dikelilingi dua bintang (**tebal**) menjadi tag <strong>
+    let htmlText = markdownText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // Mengganti baris baru (\n) menjadi tag <br>
+    htmlText = htmlText.replace(/\n/g, '<br>');
+    return htmlText;
+}
+// 2. Fungsi untuk menampilkan pesan di chat body
 function appendMessage(sender, text, isError = false, elementId = null) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('chat-message');
-
-    if (sender === 'user') {
-        messageElement.classList.add('user-message', 'text-sm');
-    } else {
-        messageElement.classList.add('bot-message', 'text-sm');
-        if (isError) messageElement.classList.add('bg-red-100', 'text-red-700');
-    }
 
     if (elementId) {
         messageElement.id = elementId;
     }
     
-    messageElement.innerHTML = text;
+    if (sender === 'user') {
+        // ✨ PERBAIKAN DI SINI: Tambahkan kembali class 'user-message'
+        messageElement.classList.add('user-message', 'text-sm');
+        messageElement.innerHTML = text; // Pesan user tidak diformat
+        
+    } else {
+        // Class untuk pesan bot
+        messageElement.classList.add('bot-message', 'text-sm');
+        if (isError) messageElement.classList.add('bg-red-100', 'text-red-700');
+
+        // Mengonversi Markdown menjadi HTML (untuk pesan bot)
+        const htmlContent = convertMarkdownToHtml(text);
+        messageElement.innerHTML = htmlContent; 
+    }
+    
     chatBody.appendChild(messageElement);
     chatBody.scrollTop = chatBody.scrollHeight;
 }
-
 // 2. Fungsi untuk memanggil Web Hook n8n (DIPERBAIKI)
 async function searchN8NAnswer(query) {
     try {
@@ -926,4 +939,5 @@ chatInput.addEventListener('keydown', function(event) {
         });
     </script>
 </body>
+
 </html>
