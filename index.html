@@ -289,70 +289,118 @@
     </div>
 </section>
     <section id="services" class="py-20 px-6 bg-white">
-        <div class="container mx-auto">
-            <div class="text-center mb-16 fade-in">
-                <h3 class="text-4xl font-bold text-gray-800 mb-4">Layanan Face Painting 🎨</h3>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Face painting profesional dengan desain kreatif untuk semua usia
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <div class="text-center card-hover bg-blue-50 rounded-2xl p-6">
+    <div class="container mx-auto">
+        <div class="text-center mb-16 fade-in">
+            <h3 class="text-4xl font-bold text-gray-800 mb-4">Layanan Face Painting 🎨</h3>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Face painting profesional dengan desain kreatif untuk semua usia
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div class="text-center card-hover bg-blue-50 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
                     <div class="text-5xl mb-3">🦸</div>
                     <h4 class="text-lg font-bold mb-2 text-blue-600">Pahlawan Super</h4>
                     <p class="text-gray-600 text-sm mb-3">Desain ala superhero populer seperti Spider-Man dan Batman</p>
-                    <span class="text-base font-bold text-green-600">Mulai Rp 35.000</span>
                 </div>
-                
-                <div class="text-center card-hover bg-pink-50 rounded-2xl p-6">
+                <div>
+                    <span class="text-base font-bold text-green-600 block mb-3">Mulai Rp 35.000</span>
+                    <button onclick="openBookingForm('layanan', 'Pahlawan Super')" class="w-full bg-blue-200 text-blue-800 py-2 rounded-lg font-bold hover:bg-blue-300 transition-colors">
+                        Pesan Layanan
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center card-hover bg-pink-50 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
                     <div class="text-5xl mb-3">👑</div>
                     <h4 class="text-lg font-bold mb-2 text-pink-600">Putri Kerajaan</h4>
                     <p class="text-gray-600 text-sm mb-3">Desain anggun dengan mahkota dan kilau untuk tampilan bak putri</p>
-                    <span class="text-base font-bold text-green-600">Mulai Rp 40.000</span>
                 </div>
-                
-                <div class="text-center card-hover bg-orange-50 rounded-2xl p-6">
+                <div>
+                    <span class="text-base font-bold text-green-600 block mb-3">Mulai Rp 40.000</span>
+                    <button onclick="openBookingForm('layanan', 'Putri Kerajaan')" class="w-full bg-pink-200 text-pink-800 py-2 rounded-lg font-bold hover:bg-pink-300 transition-colors">
+                        Pesan Layanan
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center card-hover bg-orange-50 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
                     <div class="text-5xl mb-3">🐯</div>
                     <h4 class="text-lg font-bold mb-2 text-orange-600">Hewan Lucu</h4>
                     <p class="text-gray-600 text-sm mb-3">Berubah menjadi harimau, kupu-kupu, atau anjing yang menggemaskan</p>
-                    <span class="text-base font-bold text-green-600">Mulai Rp 30.000</span>
                 </div>
-                
-                <div class="text-center card-hover bg-gray-50 rounded-2xl p-6">
+                <div>
+                    <span class="text-base font-bold text-green-600 block mb-3">Mulai Rp 30.000</span>
+                    <button onclick="openBookingForm('layanan', 'Hewan Lucu')" class="w-full bg-orange-200 text-orange-800 py-2 rounded-lg font-bold hover:bg-orange-300 transition-colors">
+                        Pesan Layanan
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center card-hover bg-gray-50 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
                     <div class="text-5xl mb-3">🤖</div>
                     <h4 class="text-lg font-bold mb-2 text-gray-600">Robot & Monster</h4>
                     <p class="text-gray-600 text-sm mb-3">Desain futuristik dan monster-monster seru untuk petualang cilik</p>
-                    <span class="text-base font-bold text-green-600">Mulai Rp 35.000</span>
                 </div>
-                
-                <div class="text-center card-hover bg-green-50 rounded-2xl p-6">
+                <div>
+                    <span class="text-base font-bold text-green-600 block mb-3">Mulai Rp 35.000</span>
+                    <button onclick="openBookingForm('layanan', 'Robot & Monster')" class="w-full bg-gray-200 text-gray-800 py-2 rounded-lg font-bold hover:bg-gray-300 transition-colors">
+                        Pesan Layanan
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center card-hover bg-green-50 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
                     <div class="text-5xl mb-3">🌸</div>
                     <h4 class="text-lg font-bold mb-2 text-green-600">Bunga & Alam</h4>
                     <p class="text-gray-600 text-sm mb-3">Motif floral yang indah dan elemen alam lainnya untuk tampilan manis</p>
-                    <span class="text-base font-bold text-green-600">Mulai Rp 25.000</span>
                 </div>
-                
-                <div class="text-center card-hover bg-purple-50 rounded-2xl p-6">
+                <div>
+                    <span class="text-base font-bold text-green-600 block mb-3">Mulai Rp 25.000</span>
+                    <button onclick="openBookingForm('layanan', 'Bunga & Alam')" class="w-full bg-green-200 text-green-800 py-2 rounded-lg font-bold hover:bg-green-300 transition-colors">
+                        Pesan Layanan
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center card-hover bg-purple-50 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
                     <div class="text-5xl mb-3">✨</div>
                     <h4 class="text-lg font-bold mb-2 text-purple-600">Abstrak Berkilau</h4>
                     <p class="text-gray-600 text-sm mb-3">Kombinasi warna-warni, glitter, dan pola unik untuk ekspresi diri</p>
-                    <span class="text-base font-bold text-green-600">Mulai Rp 30.000</span>
                 </div>
-                
-                <div class="text-center card-hover bg-gradient-to-br from-pink-50 to-yellow-50 rounded-2xl p-6 border-2 border-yellow-400 relative">
+                <div>
+                    <span class="text-base font-bold text-green-600 block mb-3">Mulai Rp 30.000</span>
+                    <button onclick="openBookingForm('layanan', 'Abstrak Berkilau')" class="w-full bg-purple-200 text-purple-800 py-2 rounded-lg font-bold hover:bg-purple-300 transition-colors">
+                        Pesan Layanan
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center card-hover bg-gradient-to-br from-pink-50 to-yellow-50 rounded-2xl p-6 border-2 border-yellow-400 relative flex flex-col justify-between">
+                <div>
                     <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-bold">
                         TRENDING
                     </div>
                     <div class="text-5xl mb-3">📱</div>
                     <h4 class="text-lg font-bold mb-2 text-yellow-600">Tren Media Sosial</h4>
                     <p class="text-gray-600 text-sm mb-3">Desain yang sedang viral seperti emoji populer, glitter art, atau pola minimalis aesthetic</p>
-                    <span class="text-base font-bold text-green-600">Mulai Rp 45.000</span>
+                </div>
+                <div>
+                    <span class="text-base font-bold text-green-600 block mb-3">Mulai Rp 45.000</span>
+                    <button onclick="openBookingForm('layanan', 'Tren Media Sosial')" class="w-full bg-yellow-200 text-yellow-800 py-2 rounded-lg font-bold hover:bg-yellow-300 transition-colors">
+                        Pesan Layanan
+                    </button>
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+</section>
     <section id="packages" class="py-20 px-6 gradient-bg text-white">
         <div class="container mx-auto">
             <div class="text-center mb-16 fade-in">
@@ -955,6 +1003,8 @@ function closeBookingForm() {
         document.body.style.overflow = 'auto';
     }
         // Booking modal functions
+// Booking modal functions
+// Fungsi menangani type: 'produk', 'layanan', 'seru', 'heboh', 'megah'
 function openBookingForm(type, detail = null) {
     const modal = document.getElementById('booking-modal');
     const packageInput = document.getElementById('selected-package');
@@ -968,11 +1018,17 @@ function openBookingForm(type, detail = null) {
     let displayValue = '';
 
     if (type === 'produk') {
+        // Pemesanan Donat Satuan
         displayValue = `Produk Satuan: ${detail}`;
     } else if (type === 'layanan') {
+        // Pemesanan Face Painting Satuan (BARU)
         displayValue = `Layanan Face Painting: ${detail}`;
-    } else {
+    } else if (packageNames[type]) {
+        // Pemesanan Paket (Lama)
         displayValue = packageNames[type];
+    } else {
+        // Kasus darurat
+        displayValue = 'Pemesanan Tidak Dikenal';
     }
 
     packageInput.value = displayValue;
@@ -1007,4 +1063,5 @@ function openBookingForm(type, detail = null) {
 </body>
 
 </html>
+
 
