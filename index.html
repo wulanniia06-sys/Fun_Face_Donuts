@@ -190,87 +190,104 @@
     </section>
 
     <section id="products" class="py-20 px-6 bg-gray-50">
-        <div class="container mx-auto">
-            <div class="text-center mb-16 fade-in">
-                <h3 class="text-4xl font-bold text-gray-800 mb-4">Menu Donat Spesial 🍩</h3>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Donat homemade segar dengan berbagai topping menarik, dibuat dengan cinta setiap hari
-                </p>
+    <div class="container mx-auto">
+        <div class="text-center mb-16 fade-in">
+            <h3 class="text-4xl font-bold text-gray-800 mb-4">Menu Donat Spesial 🍩</h3>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Donat homemade segar dengan berbagai topping menarik, dibuat dengan cinta setiap hari
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="text-6xl text-center mb-4">🍫</div>
+                    <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Cokelat Klasik</h4>
+                    <p class="text-gray-600 text-center mb-4">Donat empuk dengan glasir cokelat Belgia yang kaya rasa</p>
+                    <div class="text-center mb-4">
+                        <span class="text-2xl font-bold text-green-600">Rp 8.000</span>
+                    </div>
+                </div>
+                <button onclick="openBookingForm('produk', 'Cokelat Klasik')" class="w-full bg-pink-100 text-pink-600 py-3 font-bold hover:bg-pink-200 transition-colors">
+                    Pesan Satuan
+                </button>
             </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="p-6">
-                        <div class="text-6xl text-center mb-4">🍫</div>
-                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Cokelat Klasik</h4>
-                        <p class="text-gray-600 text-center mb-4">Donat empuk dengan glasir cokelat Belgia yang kaya rasa</p>
-                        <div class="text-center">
-                            <span class="text-2xl font-bold text-green-600">Rp 8.000</span>
-                        </div>
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="text-6xl text-center mb-4">🍓</div>
+                    <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Stroberi Ceria</h4>
+                    <p class="text-gray-600 text-center mb-4">Glasir stroberi manis dengan taburan meses warna-warni yang ceria</p>
+                    <div class="text-center mb-4">
+                        <span class="text-2xl font-bold text-green-600">Rp 8.500</span>
                     </div>
                 </div>
-                
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="p-6">
-                        <div class="text-6xl text-center mb-4">🍓</div>
-                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Stroberi Ceria</h4>
-                        <p class="text-gray-600 text-center mb-4">Glasir stroberi manis dengan taburan meses warna-warni yang ceria</p>
-                        <div class="text-center">
-                            <span class="text-2xl font-bold text-green-600">Rp 8.500</span>
-                        </div>
+                <button onclick="openBookingForm('produk', 'Stroberi Ceria')" class="w-full bg-pink-100 text-pink-600 py-3 font-bold hover:bg-pink-200 transition-colors">
+                    Pesan Satuan
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="text-6xl text-center mb-4">🧀</div>
+                    <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Keju Gurih</h4>
+                    <p class="text-gray-600 text-center mb-4">Taburan keju cheddar parut melimpah di atas glasir manis</p>
+                    <div class="text-center mb-4">
+                        <span class="text-2xl font-bold text-green-600">Rp 9.000</span>
                     </div>
                 </div>
-                
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="p-6">
-                        <div class="text-6xl text-center mb-4">🧀</div>
-                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Keju Gurih</h4>
-                        <p class="text-gray-600 text-center mb-4">Taburan keju cheddar parut melimpah di atas glasir manis</p>
-                        <div class="text-center">
-                            <span class="text-2xl font-bold text-green-600">Rp 9.000</span>
-                        </div>
+                <button onclick="openBookingForm('produk', 'Keju Gurih')" class="w-full bg-pink-100 text-pink-600 py-3 font-bold hover:bg-pink-200 transition-colors">
+                    Pesan Satuan
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="text-6xl text-center mb-4">🌿</div>
+                    <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Pandan Wangi</h4>
+                    <p class="text-gray-600 text-center mb-4">Donat dengan aroma pandan yang khas dan taburan kelapa kering</p>
+                    <div class="text-center mb-4">
+                        <span class="text-2xl font-bold text-green-600">Rp 8.500</span>
                     </div>
                 </div>
-                
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="p-6">
-                        <div class="text-6xl text-center mb-4">🌿</div>
-                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Pandan Wangi</h4>
-                        <p class="text-gray-600 text-center mb-4">Donat dengan aroma pandan yang khas dan taburan kelapa kering</p>
-                        <div class="text-center">
-                            <span class="text-2xl font-bold text-green-600">Rp 8.500</span>
-                        </div>
+                <button onclick="openBookingForm('produk', 'Pandan Wangi')" class="w-full bg-pink-100 text-pink-600 py-3 font-bold hover:bg-pink-200 transition-colors">
+                    Pesan Satuan
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover border-2 border-yellow-400 relative flex flex-col justify-between">
+                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-black px-3 py-1 rounded-full text-xs font-bold">
+                    SPESIAL
+                </div>
+                <div class="p-6">
+                    <div class="text-6xl text-center mb-4">🎨</div>
+                    <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Donat Kustom</h4>
+                    <p class="text-gray-600 text-center mb-4">Donat dengan lapisan dasar putih yang dapat dilukis dengan desain sesuai keinginan. Min. 12 pcs</p>
+                    <div class="text-center mb-4">
+                        <span class="text-2xl font-bold text-green-600">Mulai Rp 15.000</span>
                     </div>
                 </div>
-                
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover border-2 border-yellow-400 relative">
-                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-yellow-400 text-black px-3 py-1 rounded-full text-xs font-bold">
-                        SPESIAL
-                    </div>
-                    <div class="p-6">
-                        <div class="text-6xl text-center mb-4">🎨</div>
-                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Donat Kustom</h4>
-                        <p class="text-gray-600 text-center mb-4">Donat dengan lapisan dasar putih yang dapat dilukis dengan desain sesuai keinginan. Min. 12 pcs</p>
-                        <div class="text-center">
-                            <span class="text-2xl font-bold text-green-600">Mulai Rp 15.000</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
-                    <div class="p-6">
-                        <div class="text-6xl text-center mb-4">☕</div>
-                        <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Kopi Caramel</h4>
-                        <p class="text-gray-600 text-center mb-4">Glasir kopi beraroma dengan *drizzle* saus karamel asin</p>
-                        <div class="text-center">
-                            <span class="text-2xl font-bold text-green-600">Rp 9.500</span>
-                        </div>
+                <button onclick="openBookingForm('produk', 'Donat Kustom')" class="w-full bg-pink-100 text-pink-600 py-3 font-bold hover:bg-pink-200 transition-colors">
+                    Pesan Kustom
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="text-6xl text-center mb-4">☕</div>
+                    <h4 class="text-2xl font-bold text-center mb-2 text-pink-600">Kopi Caramel</h4>
+                    <p class="text-gray-600 text-center mb-4">Glasir kopi beraroma dengan *drizzle* saus karamel asin</p>
+                    <div class="text-center mb-4">
+                        <span class="text-2xl font-bold text-green-600">Rp 9.500</span>
                     </div>
                 </div>
+                <button onclick="openBookingForm('produk', 'Kopi Caramel')" class="w-full bg-pink-100 text-pink-600 py-3 font-bold hover:bg-pink-200 transition-colors">
+                    Pesan Satuan
+                </button>
             </div>
         </div>
-    </section>
-
+    </div>
+</section>
     <section id="services" class="py-20 px-6 bg-white">
         <div class="container mx-auto">
             <div class="text-center mb-16 fade-in">
@@ -476,83 +493,125 @@
             </div>
         </div>
     </section>
-
-    <section id="contact" class="py-20 px-6 bg-white">
-        <div class="container mx-auto">
-            <div class="text-center mb-16 fade-in">
-                <h3 class="text-4xl font-bold text-gray-800 mb-4">Hubungi Kami 📞</h3>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Siap melayani kebutuhan pesta dan acara spesial Anda
-                </p>
+</section>
+    <section id="testimonials" class="py-20 px-6 bg-white">
+    <div class="container mx-auto">
+        <div class="text-center mb-16 fade-in">
+            <h3 class="text-4xl font-bold text-gray-800 mb-4">Apa Kata Mereka? ⭐</h3>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Kumpulan ulasan jujur dari pelanggan FunFaceDonuts
+            </p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-pink-50 p-8 rounded-2xl shadow-lg card-hover">
+                <div class="text-3xl text-yellow-500 mb-4">⭐⭐⭐⭐⭐</div>
+                <p class="italic text-gray-700 mb-4">"Donatnya empuk banget, rasa cokelatnya premium! Anak-anak juga super happy dengan face painting harimau-nya. Praktis banget buat acara di rumah!"</p>
+                <p class="font-bold text-pink-600">- Budi S., Jakarta</p>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="space-y-8">
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-pink-100 p-4 rounded-full">
-                            <div class="text-2xl">📍</div>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg text-gray-800">Alamat</h4>
-                            <p class="text-gray-600">Jl. Kebahagiaan No. 123, Jakarta Selatan</p>
-                        </div>
+            <div class="bg-yellow-50 p-8 rounded-2xl shadow-lg card-hover">
+                <div class="text-3xl text-yellow-500 mb-4">⭐⭐⭐⭐⭐</div>
+                <p class="italic text-gray-700 mb-4">"Pesan Paket Heboh untuk ulang tahun ke-5 anak saya. Hasilnya spektakuler! Donatnya habis dalam 15 menit, dan face painter-nya profesional dan ramah."</p>
+                <p class="font-bold text-pink-600">- Rina H., Depok</p>
+            </div>
+            
+            <div class="bg-green-50 p-8 rounded-2xl shadow-lg card-hover">
+                <div class="text-3xl text-yellow-500 mb-4">⭐⭐⭐⭐⭐</div>
+                <p class="italic text-gray-700 mb-4">"Pelayanan cepat, pengiriman on-time. Anak saya dapat donat custom gambar Spider-Man dan sangat puas. Konsep yang unik dan sangat direkomendasikan!"</p>
+                <p class="font-bold text-pink-600">- Arya M., Tangerang</p>
+            </div>
+        </div>
+    </div>
+</section>
+</section>
+<section id="contact" class="py-20 px-6 bg-gray-50">
+<div class="container mx-auto">
+    <div class="text-center mb-16 fade-in">
+        <h3 class="text-4xl font-bold text-gray-800 mb-4">Hubungi Kami & Pembayaran 📞💳</h3>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Siap melayani kebutuhan pesta Anda. Pilih cara termudah untuk bertransaksi.
+        </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-12">
+        <div>
+            <h4 class="text-2xl font-bold text-pink-600 mb-6">Informasi Kontak Kami</h4>
+            <div class="space-y-6">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-pink-100 p-4 rounded-full">
+                        <div class="text-2xl">📍</div>
                     </div>
-                    
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-pink-100 p-4 rounded-full">
-                            <div class="text-2xl">📱</div>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg text-gray-800">WhatsApp</h4>
-                            <p class="text-gray-600">+62 838-1809-2776</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-pink-100 p-4 rounded-full">
-                            <div class="text-2xl">📧</div>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg text-gray-800">Email</h4>
-                            <p class="text-gray-600">hello@funfacedonuts.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-pink-100 p-4 rounded-full">
-                            <div class="text-2xl">🕒</div>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg text-gray-800">Jam Buka</h4>
-                            <p class="text-gray-600">Senin - Minggu: 09:00 - 21:00</p>
-                        </div>
+                    <div>
+                        <h5 class="font-bold text-lg text-gray-800">Alamat</h5>
+                        <p class="text-gray-600">Jl. Kebahagiaan No. 123, Jakarta Selatan</p>
                     </div>
                 </div>
                 
-                <div class="bg-gray-50 rounded-2xl p-8">
-                    <h4 class="text-2xl font-bold text-gray-800 mb-6">Kirim Pesan</h4>
-                    <form id="contact-form" class="space-y-4">
-                        <div>
-                            <input type="text" id="name" placeholder="Nama Lengkap" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <input type="tel" id="phone" placeholder="Nomor WhatsApp" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <input type="email" id="email" placeholder="Email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <textarea id="message" placeholder="Pesan Anda" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none resize-none"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-pink-600 text-white py-3 rounded-lg font-bold hover:bg-pink-700 transition-colors">
-                            Kirim Pesan
-                        </button>
-                    </form>
+                <div class="flex items-center space-x-4">
+                    <div class="bg-pink-100 p-4 rounded-full">
+                        <div class="text-2xl">📱</div>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-lg text-gray-800">WhatsApp</h5>
+                        <p class="text-gray-600">+62 838-1809-2776</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="bg-pink-100 p-4 rounded-full">
+                        <div class="text-2xl">🕒</div>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-lg text-gray-800">Jam Buka</h5>
+                        <p class="text-gray-600">Senin - Minggu: 09:00 - 21:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="text-2xl font-bold text-pink-600 mb-6 mt-10">Metode Pembayaran</h4>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
+                    <p class="font-semibold text-gray-800">Transfer Bank</p>
+                    <p class="text-sm text-gray-600">BCA, Mandiri, BNI</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-blue-500">
+                    <p class="font-semibold text-gray-800">E-Wallet</p>
+                    <p class="text-sm text-gray-600">Gopay, OVO, Dana</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-yellow-500">
+                    <p class="font-semibold text-gray-800">Kartu Kredit/Debit</p>
+                    <p class="text-sm text-gray-600">Visa & Mastercard</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-pink-500">
+                    <p class="font-semibold text-gray-800">Bayar di Tempat (DP)</p>
+                    <p class="text-sm text-gray-600">Khusus pemesanan minimal</p>
                 </div>
             </div>
         </div>
-    </section>
-
+        
+        <div class="bg-white rounded-2xl p-8 shadow-lg">
+            <h4 class="text-2xl font-bold text-gray-800 mb-6">Kirim Pesan</h4>
+            <form id="contact-form" class="space-y-4">
+                <div>
+                    <input type="text" id="name" placeholder="Nama Lengkap" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
+                </div>
+                <div>
+                    <input type="tel" id="phone" placeholder="Nomor WhatsApp" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
+                </div>
+                <div>
+                    <input type="email" id="email" placeholder="Email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none">
+                </div>
+                <div>
+                    <textarea id="message" placeholder="Pesan Anda" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:outline-none resize-none"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-pink-600 text-white py-3 rounded-lg font-bold hover:bg-pink-700 transition-colors">
+                    Kirim Pesan
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
     <footer class="gradient-bg text-white py-12 px-6">
         <div class="container mx-auto text-center">
             <div class="flex items-center justify-center space-x-3 mb-6">
@@ -890,29 +949,36 @@ chatInput.addEventListener('keydown', function(event) {
                 document.getElementById('mobile-menu').classList.add('hidden');
             });
         });
-
+function closeBookingForm() {
+        const modal = document.getElementById('booking-modal');
+        modal.classList.add('hidden'); 
+        document.body.style.overflow = 'auto';
+    }
         // Booking modal functions
-        function openBookingForm(packageType) {
-            const modal = document.getElementById('booking-modal');
-            const packageInput = document.getElementById('selected-package');
-            
-            const packageNames = {
-                'seru': 'Paket Seru - Rp 350.000',
-                'heboh': 'Paket Heboh - Rp 750.000',
-                'megah': 'Paket Megah - Rp 1.500.000'
-            };
-            
-            packageInput.value = packageNames[packageType];
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
+function openBookingForm(type, detail = null) {
+    const modal = document.getElementById('booking-modal');
+    const packageInput = document.getElementById('selected-package');
+    
+    const packageNames = {
+        'seru': 'Paket Seru - Rp 350.000',
+        'heboh': 'Paket Heboh - Rp 750.000',
+        'megah': 'Paket Megah - Rp 1.500.000'
+    };
+    
+    let displayValue = '';
 
-        function closeBookingForm() {
-            const modal = document.getElementById('booking-modal');
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
+    if (type === 'produk') {
+        displayValue = `Produk Satuan: ${detail}`;
+    } else if (type === 'layanan') {
+        displayValue = `Layanan Face Painting: ${detail}`;
+    } else {
+        displayValue = packageNames[type];
+    }
 
+    packageInput.value = displayValue;
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
         // Close modal when clicking outside
         document.getElementById('booking-modal').addEventListener('click', function(e) {
             if (e.target === this) {
@@ -941,3 +1007,4 @@ chatInput.addEventListener('keydown', function(event) {
 </body>
 
 </html>
+
